@@ -55,12 +55,12 @@ const levels = [
 function RobotGame() {
   const { addXp } = useProgress();
   const [lvl, setLvl] = useState(0);
-  const L = levels[lvl];
+  const L = levels[lvl]!;
   const [cmds, setCmds] = useState<Dir[]>([]);
   const [pos, setPos] = useState(L.start);
   const [status, setStatus] = useState<"idle" | "run" | "win" | "fail">("idle");
 
-  const reset = (l = lvl) => { setPos(levels[l].start); setStatus("idle"); };
+  const reset = (l = lvl) => { setPos(levels[l]!.start); setStatus("idle"); };
 
   const run = async () => {
     setStatus("run");
@@ -152,7 +152,7 @@ function OutputGame() {
 
   const start = () => { setI(0); setScore(0); setTime(60); setPlaying(true); };
   const pick = (o: string) => {
-    const ok = o === outputs[i % outputs.length].answer;
+    const ok = o === outputs[i % outputs.length]!.answer;
     if (ok) setScore(score + 1);
     setFlash(ok ? "ok" : "no");
     setTimeout(() => setFlash(""), 300);
@@ -169,7 +169,7 @@ function OutputGame() {
       </div>
     );
 
-  const q = outputs[i % outputs.length];
+  const q = outputs[i % outputs.length]!;
   return (
     <div>
       <div className="mb-4 flex justify-between font-mono font-bold">
@@ -198,23 +198,23 @@ const shuffle = <T,>(a: T[]) => { const b = [...a]; while (b.join() === a.join()
 function OrderGame() {
   const { addXp } = useProgress();
   const [p, setP] = useState(0);
-  const [lines, setLines] = useState<string[]>(puzzles[0].lines);
+  const [lines, setLines] = useState<string[]>(puzzles[0]!.lines);
   const [won, setWon] = useState(false);
-  useEffect(() => { setLines(shuffle(puzzles[p].lines)); setWon(false); }, [p]);
+  useEffect(() => { setLines(shuffle(puzzles[p]!.lines)); setWon(false); }, [p]);
 
   const move = (i: number, d: number) => {
     const j = i + d;
     if (j < 0 || j >= lines.length) return;
-    const n = [...lines]; [n[i], n[j]] = [n[j], n[i]]; setLines(n);
+    const n = [...lines]; [n[i], n[j]] = [n[j]!, n[i]!]; setLines(n);
   };
   const check = () => {
-    if (lines.join() === puzzles[p].lines.join()) { setWon(true); addXp(10); } else alert("Aún no está en orden. ¡Sigue intentando!");
+    if (lines.join() === puzzles[p]!.lines.join()) { setWon(true); addXp(10); } else alert("Aún no está en orden. ¡Sigue intentando!");
   };
 
   return (
     <div>
       <p className="font-mono text-xs text-muted-foreground">RETO {p + 1}/{puzzles.length}</p>
-      <h2 className="font-display text-xl font-bold">🎯 {puzzles[p].goal}</h2>
+      <h2 className="font-display text-xl font-bold">🎯 {puzzles[p]!.goal}</h2>
       <div className="mt-4 space-y-2">
         {lines.map((l, i) => (
           <div key={l} className="flex items-center gap-2">

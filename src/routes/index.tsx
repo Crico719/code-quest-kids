@@ -27,7 +27,7 @@ function Index() {
         </h1>
         <p className="mt-4 max-w-xl text-lg opacity-90">Lecciones cortas, teoremas clave, actividades para practicar y juegos para ganar XP.</p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Link to="/leccion/$id" params={{ id: lessons[0].id }} className="brutal-sm rounded-xl bg-secondary px-5 py-3 font-bold text-secondary-foreground">Empezar lección 1 →</Link>
+          <Link to="/leccion/$id" params={{ id: lessons[0]!.id }} className="brutal-sm rounded-xl bg-secondary px-5 py-3 font-bold text-secondary-foreground">Empezar lección 1 →</Link>
           <Link to="/juegos" className="brutal-sm rounded-xl bg-card px-5 py-3 font-bold text-card-foreground">🎮 Ir a los juegos</Link>
         </div>
       </section>
