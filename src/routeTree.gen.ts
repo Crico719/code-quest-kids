@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as JuegosRouteImport } from './routes/juegos'
+import { Route as LeccionIdRouteImport } from './routes/leccion.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JuegosRoute = JuegosRouteImport.update({
+  id: '/juegos',
+  path: '/juegos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeccionIdRoute = LeccionIdRouteImport.update({
+  id: '/leccion/$id',
+  path: '/leccion/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/juegos': typeof JuegosRoute
+  '/leccion/$id': typeof LeccionIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/juegos': typeof JuegosRoute
+  '/leccion/$id': typeof LeccionIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/juegos': typeof JuegosRoute
+  '/leccion/$id': typeof LeccionIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/juegos' | '/leccion/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/juegos' | '/leccion/$id'
+  id: '__root__' | '/' | '/juegos' | '/leccion/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  JuegosRoute: typeof JuegosRoute
+  LeccionIdRoute: typeof LeccionIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/juegos': {
+      id: '/juegos'
+      path: '/juegos'
+      fullPath: '/juegos'
+      preLoaderRoute: typeof JuegosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leccion/$id': {
+      id: '/leccion/$id'
+      path: '/leccion/$id'
+      fullPath: '/leccion/$id'
+      preLoaderRoute: typeof LeccionIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  JuegosRoute: JuegosRoute,
+  LeccionIdRoute: LeccionIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
