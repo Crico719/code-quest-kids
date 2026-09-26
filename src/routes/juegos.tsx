@@ -64,7 +64,7 @@ function RobotGame() {
 
   const run = async () => {
     setStatus("run");
-    let [x, y] = L.start;
+    let x = L.start[0]!, y = L.start[1]!;
     setPos([x, y]);
     for (const c of cmds) {
       await new Promise((r) => setTimeout(r, 350));
